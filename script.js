@@ -26,8 +26,8 @@ console.log(playerTwo);
 //Object to control the flow of the game
 const GameController = (function () {
     
-    const displayBoard = () => console.log(board);
-	console.log(displayBoard);
+    const displayBoard = () => console.log(Gameboard);
+	displayBoard();
 
 	let activePlayer = playerOne;
 	function switchTurns () {
