@@ -1,65 +1,55 @@
-const Gameboard = (function () {
-    const board = ["", "", "", "", "", "", "", "", ""];
-    // for(i=0;i<3;i++) {
-    //     board[i] = [];
-    //     for(j=0;j<3;j++) {
-    //         board[i].push(j);
-    //     }
-    // }
-	const [ topLeft, topMid, topRight, midLeft, midMid, midRight, botLeft, botMid, botRight ] = board;
-    return { board };
-})();
-
-console.log(Gameboard);
-
-//Players stored in objects
-function Players (playerName, marker) { 
-    return { playerName, marker };
-}
-
-const playerOne = Players("Mary", "X");
-const playerTwo = Players("Asher", "O"); 
-console.log(playerOne);
-console.log(playerTwo);
-
-
-//Object to control the flow of the game
 const GameController = (function () {
-    
-    const displayBoard = () => console.log(Gameboard);
-	displayBoard();
 
-	let activePlayer = playerOne;
+		const board = [ "", "", "", "", "", "", "", "", "" ];
+
+	//Players stored in objects
+	function Players (playerName, marker) { 
+		return { playerName, marker };
+	}
+
+	const playerOne = Players("Mary", "X");
+	const playerTwo = Players("Asher", "O"); 
+
+	//Object to control the flow of the game
+    
+	const getBoard = () => board;
+    const displayBoard = () => console.log(board);
+
+	let activePlayer = playerOne.playerName;
+
 	function switchTurns () {
-		if (activePlayer = playerOne) {
-				activePlayer = playerTwo;
+		if (activePlayer = playerOne.playerName) {
+				activePlayer = playerTwo.playerName;
 		} else {
-				activePlayer = playerOne;
+				activePlayer = playerOne.playerName;
 		}
+		function newRoundDisplay () {
+			displayBoard();
+			console.log(`${activePlayer}'s turn.`); 
+		}
+		newRoundDisplay();
 		return { activePlayer };
 	}
-	console.log(activePlayer);
-	switchTurns();
-	console.log(activePlayer)
-    
-	return { displayBoard, switchTurns }
 
-})();
-	// makeMove(playerOne, topLeft.board);
-// const newRound = () => {
-	//     displayBoard();
-	//     console.log(`${activePlayer}'s turn.`); 
-	// }
+	function makeMove (activePlayer, index) {
+		getBoard();
+		if (activePlayer === playerOne && board[index] === "") {
+		board[index] = "X";
+		} else if 
+			(activePlayer === playerTwo && board[index] === "") {
+		} else {
+			console.log("Invalid move");
+		}
+		console.log(board);
+
+	}
+				  
+makeMove(playerOne, 0);
+    
+	return { displayBoard, switchTurns, makeMove }
+	}
+)();
 	
-	// const makeMove = (activePlayer, selectedCell) => {
-		//     if (activePlayer === playerOne && selectedCell.value === "") {
-			//         return selectedCell.value = "X";
-			//     } else if (activePlayer === playerTwo && selectedCell.value === "") {
-				//         return selectedCell.value = "0";
-				//     } else {
-					//         return console.log(`Invalid selection`);
-					//     }
-					// }
 					
 					
 					// const checkAvailableCells = () => {
