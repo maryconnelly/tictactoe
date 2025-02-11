@@ -1,21 +1,27 @@
-const GameController = (function () {
+//object to store the board
 
-		const board = [ "", "", "", "", "", "", "", "", "" ];
+//Players stored in objects
+function Players (playerName, marker) { 
+	return { playerName, marker };
+}
+const playerOne = Players("Mary", "X");
+const playerTwo = Players("Asher", "O"); 
+console.log(playerOne);
+console.log(playerTwo);
 
-	//Players stored in objects
-	function Players (playerName, marker) { 
-		return { playerName, marker };
-	}
+//Object to control the flow of the game
+function GameController () {
+	
+	const board = [ "", "", "", "", "", "", "", "", "" ];
+	
+	function getBoard () {
+		return board;
+	};
 
-	const playerOne = Players("Mary", "X");
-	const playerTwo = Players("Asher", "O"); 
+	function displayBoard() {
+		return console.log(board);
+	};
 
-	//Object to control the flow of the game
-    
-	const getBoard = () => board;
-    const displayBoard = () => console.log(board);
-
-	let activePlayer = playerOne.playerName;
 
 	function makeMove (activePlayer, index) {
 		getBoard();
@@ -27,9 +33,15 @@ const GameController = (function () {
 		} else {
 			console.log("Invalid move");
 		}
-		checkWinner();
+		displayBoard();
 		checkAvailableSquares();
+		checkWinner();
 	}
+
+	makeMove(playerOne, 0);
+	makeMove(playerOne, 1);
+	makeMove(playerOne, 2);
+
 
 	function switchTurns () {
 		if (activePlayer = playerOne.playerName) {
@@ -55,6 +67,7 @@ const GameController = (function () {
 		}
 	}
 	
+	
 	function checkWinner () {
 		getBoard();
 		if (board[0] === board[1] === board[2] ||
@@ -70,6 +83,6 @@ const GameController = (function () {
 				return;
 			}
 		}
-			return { displayBoard, switchTurns, makeMove, checkWinner, checkAvailableSquares }
+			return { switchTurns, makeMove, checkWinner, checkAvailableSquares }
 		}
-	)();
+		GameController();
