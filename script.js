@@ -1,6 +1,6 @@
 //object to store the board
 const Gameboard = (function() {
-	const board = [ "X", "X", "X", "", "", "", "", "", "" ];
+	const board = [ "", "", "", "", "", "", "", "", "" ];
 	const getBoard = () => board;
 	const displayBoard = () => console.log(board);
 
@@ -62,7 +62,23 @@ const GameController = (function () {
 	
 	const DisplayController = (function () {
 
+		const gameContainer = document.querySelector(".container");
+			document.body.appendChild(gameContainer);
 
+		const turnDisplay = document.querySelector(".turn");
+			gameContainer.appendChild(turnDisplay);
+				turnDisplay.textContent = "Ready to play?";
+	
+			
+		const boardDisplay = document.querySelector(".board");
+			gameContainer.appendChild(boardDisplay);
+		
+		for (i=0;i<9;i++) {
+			const square = document.createElement("button");
+				boardDisplay.appendChild(square);
+				
+			
+
+		}
 	})();
 	
-	GameController.checkWinner();
