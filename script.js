@@ -8,12 +8,12 @@ const Gameboard = (function() {
 })();
 
 //Players stored in objects
-const Players = (function () { 
-	const playerOne = "Mary";
-	const playerTwo = "Asher";
+const Players = (function (playerName, marker) { 
+	const playerOne = (playerName, marker) => {"Mary", "X"};
+	const playerTwo = (playerName, marker) => {"Asher", "O"};
 	let activePlayer = playerOne;
 
-		return { playerOne, playerTwo, activePlayer };
+		return { playerName, marker, playerOne, playerTwo, activePlayer };
 })();
 
 //Object to control the flow of the game
@@ -76,9 +76,10 @@ const GameController = (function () {
 		for (i=0;i<9;i++) {
 			const square = document.createElement("button");
 				boardDisplay.appendChild(square);
-				
-			
-
+				square.addEventListener('click', () => {
+					square.textContent = `${Players.activePlayer[marker]}`;
+				})
+		
 		}
-	})();
 	
+	})();
