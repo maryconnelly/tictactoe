@@ -1,6 +1,8 @@
 //object to store the board
 const Gameboard = (function() {
+	
 	const board = [ "", "", "", "", "", "", "", "", "" ];
+ 
 	const getBoard = () => board;
 	const displayBoard = () => console.log(board);
 
@@ -11,14 +13,13 @@ const Gameboard = (function() {
 const Players = (function () { 
 	const playerOne = "Mary";
 	const playerTwo = "Asher";
-	let activePlayer = playerOne;
+	let activePlayer = playerTwo;
 
 		return { playerOne, playerTwo, activePlayer };
 })();
 
 //Object to control the flow of the game
 const GameController = (function () {
-
 
 	function newRoundDisplay () {
 		Gameboard.displayBoard();
@@ -34,6 +35,7 @@ const GameController = (function () {
 		} else {
 			console.log("Invalid move");
 		}
+
 	}
 	
 	function checkWinner () {
@@ -73,14 +75,23 @@ const GameController = (function () {
 		const boardDisplay = document.querySelector(".board");
 			gameContainer.appendChild(boardDisplay);
 		
-		for (i=0;i<9;i++) {
+		for (let i=0;i<9;i++) {
 			const square = document.createElement("button");
 				boardDisplay.appendChild(square);
+				square.id = `square${i + 1}`
+				square.textContent = "";
 				square.addEventListener('click', () => {
-					if (Players.activePlayer = Players.playerOne) {
-						square.textContent = "X";
-					} else {
-						square.textContent = "O";
-					}
+					let index = (i - 1) + 1;
+					if (Players.activePlayer === Players.playerOne) {	
+							GameController.makeMove(Players.playerOne, index);
+							square.textContent = "X";
+
+					} else if (Players.activePlayer === Players.playerTwo) {
+							GameController.makeMove(Players.playerTwo, index);
+							square.textContent = "O";
+					};
+
+					console.log(Gameboard.board);
 		})};
+
 })();
