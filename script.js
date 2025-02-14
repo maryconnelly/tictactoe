@@ -1,8 +1,6 @@
 //object to store the board
 const Gameboard = (function() {
-	
 	const board = [ "", "", "", "", "", "", "", "", "" ];
- 
 	const getBoard = () => board;
 	const displayBoard = () => console.log(board);
 
@@ -65,33 +63,70 @@ const GameController = (function () {
 	const DisplayController = (function () {
 
 		const gameContainer = document.querySelector(".container");
-			document.body.appendChild(gameContainer);
+		const sidebar = document.querySelector(".sidebar");
+			gameContainer.appendChild(sidebar);
 
-		const turnDisplay = document.querySelector(".turn");
-			gameContainer.appendChild(turnDisplay);
-				turnDisplay.textContent = "Ready to play?";
-	
+		
+		const playerOneLabel = document.createElement("label");
+			sidebar.appendChild(playerOneLabel);
+				playerOneLabel.htmlFor = "player-one-input";
+				playerOneLabel.textContent = "Player One's Name:"
+				playerOneLabel.classList.add("player-one");
 			
+		const playerOneInput = document.createElement("input");
+			sidebar.appendChild(playerOneInput);
+				playerOneInput.type = "text";
+				playerOneInput.id = "player-one-input";
+				playerOneInput.classList.add("player-one");
+
+		
+		const playerTwoLabel = document.createElement("label");
+			sidebar.appendChild(playerTwoLabel);
+				playerTwoLabel.htmlFor = "player-two-input";
+				playerTwoLabel.textContent = "Player Two's Name:"
+				playerTwoLabel.classList.add("player-two");
+		
+		const playerTwoInput = document.createElement("input");
+			sidebar.appendChild(playerTwoInput);
+				playerTwoInput.type = "text";
+				playerTwoInput.id = "player-two-input";
+				playerTwoInput.classList.add("player-two");
+
 		const boardDisplay = document.querySelector(".board");
 			gameContainer.appendChild(boardDisplay);
-		
-		for (let i=0;i<9;i++) {
-			const square = document.createElement("button");
-				boardDisplay.appendChild(square);
-				square.id = `square${i + 1}`
-				square.textContent = "";
-				square.addEventListener('click', () => {
-					let index = (i - 1) + 1;
-					if (Players.activePlayer === Players.playerOne) {	
-							GameController.makeMove(Players.playerOne, index);
-							square.textContent = "X";
 
-					} else if (Players.activePlayer === Players.playerTwo) {
-							GameController.makeMove(Players.playerTwo, index);
-							square.textContent = "O";
-					};
+			
+			const turnDisplay = document.querySelector(".turn");
+			sidebar.appendChild(turnDisplay);
+			turnDisplay.textContent = `${Players.activePlayer}'s turn!`;
+			
+			const playButton = document.createElement("submit");
+					sidebar.appendChild(playButton);
+					playButton.textContent = "Play Tic-Tac-Toe!";
+					playButton.addEventListener('click', () => {
+						document.body.appendChild(gameContainer);
+						
+					})
+				
+				
+				
+				for (let i=0;i<9;i++) {
+				const square = document.createElement("button");
+					boardDisplay.appendChild(square);
+					square.id = `square${i + 1}`
+					square.textContent = "";
+					square.addEventListener('click', () => {
+						let index = (i - 1) + 1;
+						if (Players.activePlayer === Players.playerOne) {	
+								GameController.makeMove(Players.playerOne, index);
+								square.textContent = "X";
 
-					console.log(Gameboard.board);
+						} else if (Players.activePlayer === Players.playerTwo) {
+								GameController.makeMove(Players.playerTwo, index);
+								square.textContent = "O";
+						};
+
+						console.log(Gameboard.board);
 		})};
 
 })();
