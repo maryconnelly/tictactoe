@@ -9,7 +9,7 @@
   grid-template-rows: 1fr 1fr;
 }  
 .board {
-    display: grid;
+    display: none;
     height: 500px;
     width: 500px;
     grid-area: 1 / 2 / 3 / 3;
@@ -25,23 +25,37 @@
 
   .sidebar {
     display: grid;
-    grid-area: 1 / 1 / 3 / 2;
+    grid-area: 1 / 1 / 3 / 3;
     grid-template: repeat(5, 1fr) / 1fr;
 
   }
 
   .turn {
+    display: none;
     grid-area: 1 / 1 / 2 / 2;
     place-self: center;
     font-size: 28px;
     
   }
 
-  .player-one {
+  .form {
+    display: grid;
+    grid-area: 1 / 1 / 6 / 2;
+  }
+
+  #player-one-label {
     grid-area: 2 / 1 / 3 / 2;
   }
 
-  .player-two {
+  #player-one-input {
+    grid-area: 2 / 1 / 3 / 2;
+  }
+
+  #player-two-label {
+    grid-area: 3 / 1 / 4 / 2;
+  }
+
+  #player-two-input {
     grid-area: 3 / 1 / 4 / 2;
   }
   
@@ -60,7 +74,7 @@
     border-radius: 8px;
   }
 
-submit {
+#play-button {
   grid-area: 4 / 1 / 5 / 2;
   place-self: center;
   border: solid 1px black;
