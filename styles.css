@@ -69,8 +69,8 @@
     place-self: center;
     border: black solid 1px;
     height: 30px;
-    padding: 10px;
-    width: 180px;
+    padding: 20px;
+    width: 300px;
     border-radius: 8px;
   }
 
@@ -78,9 +78,10 @@
   grid-area: 4 / 1 / 5 / 2;
   place-self: center;
   border: solid 1px black;
-  padding: 10px;
-  width: 150px;
-  border-radius: 8px;
+  padding: 20px;
+  width: 250px;
+  border-radius: 20px;
   text-align: center;
+  font-size: 24px;
 }
 
