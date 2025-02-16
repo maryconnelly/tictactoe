@@ -1,4 +1,11 @@
-//object to store the board
+// //To-Do's
+// cats and dogs result
+// turn display
+// winner display
+// styling
+
+
+// object to store the board
 const Gameboard = (function() {
 	const boardArray = [ "", "", "", "", "", "", "", "", "" ];
 return { boardArray };
@@ -26,7 +33,6 @@ const GameController = (function () {
 		(activePlayer === Players.playerTwo && Gameboard.boardArray[index] === "") {
 			Gameboard.boardArray[index] = "O";
 		}
-		checkWinner();
 	};
 	
 	function checkWinner() {
@@ -47,21 +53,13 @@ const GameController = (function () {
 			Gameboard.boardArray[6] !== "" && Gameboard.boardArray[4] !== "" && Gameboard.boardArray[2] !== "" && 
 			Gameboard.boardArray[6] === Gameboard.boardArray[4] && Gameboard.boardArray[4] === Gameboard.boardArray[2]) {
 				Players.winner = Players.activePlayer;
+
 			} else {
 				Players.winner = "";
 			}
 		};
 	
-		function switchTurns() {
-				if (Players.activePlayer = Players.playerOne) {
-					Players.activePlayer = Players.playerTwo;
-				} else if (Players.activePlayer = Players.playerTwo) {
-					Players.activePlayer = Players.playerOne;
-				}	
-				console.log(Players.activePlayer);
-			};
-	
-		return { makeMove, checkWinner, switchTurns }
+		return { makeMove, checkWinner }
 
 	})();
 
@@ -70,12 +68,10 @@ const DisplayController = (function () {
 	const container = document.querySelector(".container");
 		document.body.appendChild(container);
 		
-		// const turnDisplay = document.querySelector(".turn");
-		// container.appendChild(turnDisplay);
-		// //wont't update
-		// turnDisplay.textContent = `${Players.activePlayer}'s turn`;
+	const GameboardDisplay = (function () {
 
-		const GameboardDisplay = (function () {
+		const turnDisplay = document.querySelector(".turn");
+			container.appendChild(turnDisplay);
 		
 		const boardDisplay = document.querySelector(".board");
 		container.appendChild(boardDisplay);
@@ -85,7 +81,7 @@ const DisplayController = (function () {
 				boardDisplay.appendChild(square);
 				square.id = `square${i + 1}`
 				square.textContent = "";
-	
+
 			square.addEventListener('click', () => {
 
 				if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
@@ -93,12 +89,17 @@ const DisplayController = (function () {
 					square.textContent = "X"
 					GameController.checkWinner();
 					Players.activePlayer = Players.playerTwo;
+					turnDisplay.style.display = "grid";
+					turnDisplay.textContent = `${SidebarDisplay.playerTwoInput.value}'s turn!`;
+
 					
 				} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
 					GameController.makeMove(Players.playerTwo, (i - 1) + 1);
 					square.textContent = "O";
 					GameController.checkWinner();
 					Players.activePlayer = Players.playerOne;
+					turnDisplay.style.display = "grid";
+					turnDisplay.textContent = `${SidebarDisplay.playerOneInput.value}'s turn!`;
 				};
 				
 				console.log(Gameboard.boardArray);
@@ -107,7 +108,7 @@ const DisplayController = (function () {
 			})
 		} 
 
-			return { container, boardDisplay  }
+			return { container, turnDisplay, boardDisplay  }
 		})();
 		
 		const SidebarDisplay = (function () {
@@ -119,25 +120,27 @@ const DisplayController = (function () {
 				sidebar.appendChild(form);
 				form.id = "form";
 	
-			const playerOneLabel = document.createElement("label");
+				const playerOneLabel = document.createElement("label");
 				form.appendChild(playerOneLabel);
-					playerOneLabel.htmlFor = "player-one-input";
-					playerOneLabel.textContent = "Player One's Name:"
-					playerOneLabel.classList.add("player-one");
-					playerOneLabel.id = "player-one-label";
-			const playerOneInput = document.createElement("input");
+				playerOneLabel.htmlFor = "player-one-input";
+				playerOneLabel.textContent = "Player One's Name:";
+				playerOneLabel.classList.add("player-one");
+				playerOneLabel.id = "player-one-label";
+				
+				const playerOneInput = document.createElement("input");
 				form.appendChild(playerOneInput);
-					playerOneInput.type = "text";
-					playerOneInput.id = "player-one-input";
-					playerOneInput.classList.add("player-one");
-					playerOneInput.required = true;
-	
+				playerOneInput.type = "text";
+				playerOneInput.id = "player-one-input";
+				playerOneInput.classList.add("player-one");
+				playerOneInput.required = true;
+				
 			const playerTwoLabel = document.createElement("label");
 				form.appendChild(playerTwoLabel);
 					playerTwoLabel.htmlFor = "player-two-input";
-					playerTwoLabel.textContent = "Player Two's Name:"
+					playerTwoLabel.textContent = "Player Two's Name:";
 					playerTwoLabel.classList.add("player-two");
 					playerTwoLabel.id = "player-two-label";
+
 			const playerTwoInput = document.createElement("input");
 				form.appendChild(playerTwoInput);
 					playerTwoInput.type = "text";
@@ -155,10 +158,12 @@ const DisplayController = (function () {
 					playerTwoInput.style.display = "none";
 					playerTwoLabel.textContent = `O: ${playerTwoInput.value}`;
 					playButton.style.display = "none";
-					//DisplayController[turnDisplay].style.display = "grid";
 					sidebar.style.gridArea = "1 / 1 / 3 / 2";
 					GameboardDisplay.boardDisplay.style.display = "grid";
-	
+					GameboardDisplay.turnDisplay.style.display = "grid";
+					GameboardDisplay.turnDisplay.textContent = `${playerOneInput.value}'s turn!`;
+				})
+					
 				// const playAgainButton = document.createElement("button");
 				// 	sidebar.appendChild(playAgainButton);
 				// 	playAgainButton.id = "play-again";
@@ -171,11 +176,9 @@ const DisplayController = (function () {
 				// 		Players.playerTwoInput.style.display = "block";
 				// 		DisplayController[SidebarDisplay].playButton.style.display = "block";
 				// 	})
-				})
 				
-				return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
+			return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
+		})();
 				
-			})();
-
 return { GameboardDisplay, SidebarDisplay }
 })();
