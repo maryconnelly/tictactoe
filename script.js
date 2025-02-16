@@ -25,8 +25,8 @@ const GameController = (function () {
 		} else if 
 		(activePlayer === Players.playerTwo && Gameboard.boardArray[index] === "") {
 			Gameboard.boardArray[index] = "O";
-			
 		}
+		checkWinner();
 	};
 	
 	function checkWinner() {
@@ -49,14 +49,13 @@ const GameController = (function () {
 				Players.winner = Players.activePlayer;
 			} else {
 				Players.winner = "";
-				switchTurns();	
 			}
 		};
 	
 		function switchTurns() {
 				if (Players.activePlayer = Players.playerOne) {
 					Players.activePlayer = Players.playerTwo;
-				} else {
+				} else if (Players.activePlayer = Players.playerTwo) {
 					Players.activePlayer = Players.playerOne;
 				}	
 				console.log(Players.activePlayer);
@@ -70,13 +69,14 @@ const DisplayController = (function () {
 
 	const container = document.querySelector(".container");
 		document.body.appendChild(container);
+		
+		// const turnDisplay = document.querySelector(".turn");
+		// container.appendChild(turnDisplay);
+		// //wont't update
+		// turnDisplay.textContent = `${Players.activePlayer}'s turn`;
 
-	const turnDisplay = document.querySelector(".turn");
-		container.appendChild(turnDisplay);
-			turnDisplay.textContent = `${Players.activePlayer}'s turn`;
-	
-	const GameboardDisplay = (function () {
-			
+		const GameboardDisplay = (function () {
+		
 		const boardDisplay = document.querySelector(".board");
 		container.appendChild(boardDisplay);
 			
@@ -87,18 +87,22 @@ const DisplayController = (function () {
 				square.textContent = "";
 	
 			square.addEventListener('click', () => {
+
 				if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
 					GameController.makeMove(Players.playerOne, (i - 1) + 1);
-					square.textContent = "X";
+					square.textContent = "X"
+					GameController.checkWinner();
+					Players.activePlayer = Players.playerTwo;
 					
 				} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
 					GameController.makeMove(Players.playerTwo, (i - 1) + 1);
 					square.textContent = "O";
-					
+					GameController.checkWinner();
+					Players.activePlayer = Players.playerOne;
 				};
-				GameController.checkWinner();
-				console.log(`${Players.activePlayer} is active`);
+				
 				console.log(Gameboard.boardArray);
+				console.log(`${Players.activePlayer} is active`);
 				console.log(`Winner is ${Players.winner}`);
 			})
 		} 
@@ -151,7 +155,7 @@ const DisplayController = (function () {
 					playerTwoInput.style.display = "none";
 					playerTwoLabel.textContent = `O: ${playerTwoInput.value}`;
 					playButton.style.display = "none";
-					turnDisplay.style.display = "block";
+					//DisplayController[turnDisplay].style.display = "grid";
 					sidebar.style.gridArea = "1 / 1 / 3 / 2";
 					GameboardDisplay.boardDisplay.style.display = "grid";
 	
@@ -169,7 +173,7 @@ const DisplayController = (function () {
 				// 	})
 				})
 				
-				return { sidebar, turnDisplay, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
+				return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
 				
 			})();
 
