@@ -9,21 +9,24 @@ const Players = (function () {
 	let playerOne = "X";
 	let playerTwo = "O";
 	let activePlayer = playerOne;
+	let winner = "";
 
-return { playerOne, playerTwo, activePlayer };
+return { playerOne, playerTwo, activePlayer, winner };
 })();
 
 //Object to control the flow of the game
 const GameController = (function () {
 
+	//make move updates array indexes to X or O;
 	function makeMove(activePlayer, index) {
 		if (activePlayer === Players.playerOne && Gameboard.boardArray[index] === "") {
 			Gameboard.boardArray[index] = "X";
+		
 		} else if 
 		(activePlayer === Players.playerTwo && Gameboard.boardArray[index] === "") {
 			Gameboard.boardArray[index] = "O";
+			
 		}
-
 	};
 	
 	function checkWinner() {
@@ -42,25 +45,23 @@ const GameController = (function () {
 			Gameboard.boardArray[0] !== "" && Gameboard.boardArray[4] !== "" && Gameboard.boardArray[8] !== "" && 
 			Gameboard.boardArray[0] === Gameboard.boardArray[4] && Gameboard.boardArray[4] === Gameboard.boardArray[8] ||
 			Gameboard.boardArray[6] !== "" && Gameboard.boardArray[4] !== "" && Gameboard.boardArray[2] !== "" && 
-			Gameboard.boardArray[6] === Gameboard.boardArray[4] && Gameboard.boardArray[4] === Gameboard.boardArray[2]) 
-				
-			{ console.log(`${Players.activePlayer} wins!`)
-		
+			Gameboard.boardArray[6] === Gameboard.boardArray[4] && Gameboard.boardArray[4] === Gameboard.boardArray[2]) {
+				Players.winner = Players.activePlayer;
 			} else {
-				switchTurns();
+				Players.winner = "";
+				switchTurns();	
 			}
 		};
 	
-	
-
 		function switchTurns() {
-			if (Players.activePlayer = Players.playerOne) {
-				Players.activePlayer = Players.playerTwo;
-			} else {
-				Players.activePlayer = Players.playerOne;
-			}
-		};
-
+				if (Players.activePlayer = Players.playerOne) {
+					Players.activePlayer = Players.playerTwo;
+				} else {
+					Players.activePlayer = Players.playerOne;
+				}	
+				console.log(Players.activePlayer);
+			};
+	
 		return { makeMove, checkWinner, switchTurns }
 
 	})();
@@ -69,42 +70,38 @@ const DisplayController = (function () {
 
 	const container = document.querySelector(".container");
 		document.body.appendChild(container);
+
+	const turnDisplay = document.querySelector(".turn");
+		container.appendChild(turnDisplay);
+			turnDisplay.textContent = `${Players.activePlayer}'s turn`;
 	
-		const GameboardDisplay = (function () {
+	const GameboardDisplay = (function () {
 			
-			const boardDisplay = document.querySelector(".board");
-			container.appendChild(boardDisplay);
+		const boardDisplay = document.querySelector(".board");
+		container.appendChild(boardDisplay);
 			
-			for (let i=0;i<9;i++) {
+		for (let i=0;i<9;i++) {
 			const square = document.createElement("button");
 				boardDisplay.appendChild(square);
 				square.id = `square${i + 1}`
 				square.textContent = "";
-				square.addEventListener('click', () => {
-					if (Players.activePlayer === Players.playerOne) {	
-						GameController.makeMove(Players.playerOne, (i - 1) + 1);
-						square.textContent = "X";
-						console.log(Gameboard.boardArray);
-						GameController.checkWinner();
-
-				
-						
-					} else if (Players.activePlayer === Players.playerTwo) {
-						GameController.makeMove(Players.playerTwo, (i - 1) + 1);
-						square.textContent = "O";
-						console.log(Gameboard.boardArray);
-						GameController.checkWinner();
-						
-			
-					};
-				})
-
-				// if (square.textContent = "") {
-				// 	square.disabled = "false";
-				// } else {
-				// 	square.disabled = "true";
-				// }
-			};
+	
+			square.addEventListener('click', () => {
+				if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
+					GameController.makeMove(Players.playerOne, (i - 1) + 1);
+					square.textContent = "X";
+					
+				} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
+					GameController.makeMove(Players.playerTwo, (i - 1) + 1);
+					square.textContent = "O";
+					
+				};
+				GameController.checkWinner();
+				console.log(`${Players.activePlayer} is active`);
+				console.log(Gameboard.boardArray);
+				console.log(`Winner is ${Players.winner}`);
+			})
+		} 
 
 			return { container, boardDisplay  }
 		})();
@@ -113,10 +110,6 @@ const DisplayController = (function () {
 	
 			const sidebar = document.querySelector(".sidebar");
 				container.appendChild(sidebar);
-				
-			const turnDisplay = document.querySelector(".turn");
-				sidebar.appendChild(turnDisplay);
-				turnDisplay.textContent = `${Players.activePlayer}'s turn`;
 	
 			const form = document.querySelector(".form");
 				sidebar.appendChild(form);
@@ -180,7 +173,5 @@ const DisplayController = (function () {
 				
 			})();
 
-return { SidebarDisplay, GameboardDisplay }
+return { GameboardDisplay, SidebarDisplay }
 })();
-
-console.log(Gameboard.boardArray[0]);
