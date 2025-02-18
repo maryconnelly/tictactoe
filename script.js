@@ -58,6 +58,7 @@ const GameController = (function () {
 		return { makeMove, checkWinner }
 	})();
 
+
 const DisplayController = (function () {
 
 	const container = document.querySelector(".container");
@@ -157,8 +158,8 @@ const DisplayController = (function () {
 					xLabel.style.gridArea = "2 / 1 / 3 / 2"
 					xLabel.textContent = "X:"
 					xLabel.style.justifySelf = "center";
-					xLabel.style.fontSize = "40px";
-					xLabel.style.color = "var(--game-text)";
+					xLabel.style.fontSize = "45px";
+					xLabel.style.color = "var(--player-one)";
 
 					
 					playerOneLabel.style.gridArea = "3 / 1 / 4 / 2";
@@ -174,8 +175,8 @@ const DisplayController = (function () {
 					oLabel.style.gridArea = "4 / 1 / 5 / 2"
 					oLabel.textContent = "O:";
 					oLabel.style.justifySelf = "center";
-					oLabel.style.fontSize = "40px";
-					oLabel.style.color = "var(--game-text)";
+					oLabel.style.fontSize = "45px";
+					oLabel.style.color = "var(--player-two)";
 					
 					playerTwoLabel.style.gridArea = "5 / 1 / 6 / 2";
 					playerTwoLabel.style.justifySelf = "center";
@@ -202,6 +203,7 @@ const DisplayController = (function () {
 			} else if (Players.winner === "") {
 				resultDisplay.style.display = "grid";
 				resultDisplay.textContent = `It's a draw!`;
+				resultDisplay.style.justifySelf = "start";
 			}
 	
 			const playAgainButton = document.createElement('button');

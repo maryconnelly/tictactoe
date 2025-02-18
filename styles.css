@@ -93,10 +93,9 @@ input {
 
 #play-button, #play-again-button {
   padding: 20px;
-  width: 220px;
   border-radius: 20px;
   text-align: center;
-  font-size: 18px;
+  border-style: none;
   background-color: var(--button-background);
   color: var(--button-font);
 }
@@ -105,11 +104,13 @@ input {
   grid-area: 5 / 1 / 6 / 2;
   align-self: start;
   justify-self: center;
+  width: 220px;
+  font-size: 18px;
 }
 
 .result-display {
   color: var(--button-background);
-  grid-area: 1 / 1 / 2 / 2;
+  grid-area: 1 / 1 / 2 / 3;
   font-size: 50px;
   place-self: center;
 
@@ -118,5 +119,8 @@ input {
 #play-again-button {
   grid-area: 1 / 2 / 2 / 3;
   place-self: center;
+  width: 270px;
+  font-size: 24px;
+
 }
 
