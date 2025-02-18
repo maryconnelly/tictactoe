@@ -110,7 +110,7 @@ input {
 
 .result-display {
   color: var(--button-background);
-  grid-area: 1 / 1 / 2 / 3;
+  grid-area: 1 / 1 / 2 / 2;
   font-size: 50px;
   place-self: center;
 

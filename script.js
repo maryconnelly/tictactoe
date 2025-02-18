@@ -203,7 +203,6 @@ const DisplayController = (function () {
 			} else if (Players.winner === "") {
 				resultDisplay.style.display = "grid";
 				resultDisplay.textContent = `It's a draw!`;
-				resultDisplay.style.justifySelf = "start";
 			}
 	
 			const playAgainButton = document.createElement('button');
