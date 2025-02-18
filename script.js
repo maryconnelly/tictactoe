@@ -205,7 +205,9 @@ const DisplayController = (function () {
 			container.appendChild(playAgainButton);
 			playAgainButton.id = "play-again-button";
 			playAgainButton.textContent = "Play again?";
-
+			playAgainButton.addEventListener('click', () =>{
+				window.location.reload();
+		})
 	}
 			
 return { container, GameboardDisplay, SidebarDisplay, endGameDisplay }
