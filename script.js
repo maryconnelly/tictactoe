@@ -64,78 +64,32 @@ const DisplayController = (function () {
 	const container = document.querySelector(".container");
 		document.body.appendChild(container);
 	
-	const GameboardDisplay = (function () {
-
-		const boardDisplay = document.querySelector(".board");
-		container.appendChild(boardDisplay);
-			
-		for (let i=0;i<9;i++) {
-		const square = document.createElement("button");
-			boardDisplay.appendChild(square);
-			square.id = `square${(i+ 1)}`;
-			square.classList.add("square");
-			square.textContent = "";
-			square.addEventListener('click', () => {
-
-					if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
-						GameController.makeMove(Players.playerOne, (i - 1) + 1);
-						square.textContent = "X"
-						square.style.color = "var(--player-one)";
-						GameController.checkWinner();
-						Players.activePlayer = Players.playerTwo;
-						SidebarDisplay.playerTwoLabel.style.transform = "scale(1.2)";
-						SidebarDisplay.playerOneLabel.style.transform = "scale(1)";
-						SidebarDisplay.playerTwoLabel.textContent = `${SidebarDisplay.playerTwoInput.value}'s turn`;
-						SidebarDisplay.playerOneLabel.textContent = `${SidebarDisplay.playerOneInput.value}`;
-						
-					} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
-						GameController.makeMove(Players.playerTwo, (i - 1) + 1);
-						square.textContent = "O";
-						square.style.color = "var(--player-two)";
-						GameController.checkWinner();
-						Players.activePlayer = Players.playerOne;
-						SidebarDisplay.playerOneLabel.style.transform = "scale(1.2)";
-						SidebarDisplay.playerTwoLabel.style.transform = "scale(1)";
-						SidebarDisplay.playerOneLabel.textContent = `${SidebarDisplay.playerOneInput.value}'s turn`;
-						SidebarDisplay.playerTwoLabel.textContent = `${SidebarDisplay.playerTwoInput.value}`;
-					}
-			})
-		} 
-
-	return { boardDisplay }
-	})();
+	const formDisplay = (function() {
 		
-	const SidebarDisplay = (function () {
-	
-		const sidebar = document.querySelector(".sidebar");
-				container.appendChild(sidebar);
-	
 		const form = document.querySelector(".form");
-				sidebar.appendChild(form);
-				form.id = "form";
-	
+			container.appendChild(form);
+			
 			const playerOneLabel = document.createElement("label");
 				form.appendChild(playerOneLabel);
 					playerOneLabel.htmlFor = "player-one-input";
 					playerOneLabel.classList.add("player-one");
 					playerOneLabel.id = "player-one-label";
+					playerOneLabel.classList.add("player-one");
 					playerOneLabel.textContent = "Player One's Name:";
-					playerOneLabel.style.color = "var(--player-one)";
 				
 			const playerOneInput = document.createElement("input");
 				form.appendChild(playerOneInput);
-					playerOneInput.type = "text";
 					playerOneInput.id = "player-one-input";
 					playerOneInput.classList.add("player-one");
+					playerOneInput.type = "text";
 					playerOneInput.required = true;
 					
 			const playerTwoLabel = document.createElement("label");
 				form.appendChild(playerTwoLabel);
-					playerTwoLabel.htmlFor = "player-two-input";
-					playerTwoLabel.classList.add("player-two");
 					playerTwoLabel.id = "player-two-label";
+					playerTwoLabel.classList.add("player-two");
+					playerTwoLabel.htmlFor = "player-two-input";
 					playerTwoLabel.textContent = "Player Two's Name:";
-					playerTwoLabel.style.color = "var(--player-two)";
 					
 			const playerTwoInput = document.createElement("input");
 				form.appendChild(playerTwoInput);
@@ -151,68 +105,122 @@ const DisplayController = (function () {
 				
 				playButton.addEventListener('click', () => {
 
-					SidebarDisplay.sidebar.style.gridTemplate = "repeat(6, 1fr) / 1fr";
-					
-					const xLabel = document.createElement("h1");
-					SidebarDisplay.sidebar.appendChild(xLabel);
-					xLabel.style.gridArea = "2 / 1 / 3 / 2"
-					xLabel.textContent = "X:"
-					xLabel.style.justifySelf = "center";
-					xLabel.style.fontSize = "45px";
-					xLabel.style.color = "var(--player-one)";
-
-					
-					playerOneLabel.style.gridArea = "3 / 1 / 4 / 2";
-					playerOneLabel.style.justifySelf = "center";
-					playerOneLabel.style.fontSize = "30px";
-					playerOneLabel.textContent = `${playerOneInput.value}'s turn`;
-					playerOneLabel.style.transform = "scale(1.5)";
-					
-					playerOneInput.style.display = "none";
-
-					const oLabel = document.createElement("h1");
-					SidebarDisplay.sidebar.appendChild(oLabel);
-					oLabel.style.gridArea = "4 / 1 / 5 / 2"
-					oLabel.textContent = "O:";
-					oLabel.style.justifySelf = "center";
-					oLabel.style.fontSize = "45px";
-					oLabel.style.color = "var(--player-two)";
-					
-					playerTwoLabel.style.gridArea = "5 / 1 / 6 / 2";
-					playerTwoLabel.style.justifySelf = "center";
-					playerTwoLabel.style.fontSize = "30px";
-					playerTwoLabel.textContent = `${playerTwoInput.value}`;
-						playerTwoInput.style.display = "none";
 					playButton.style.display = "none";
-					sidebar.style.gridArea = "1 / 1 / 3 / 2";
+					formDisplay.form.style.display = "none";
+					DisplayController.container.style.gridTemplate = "1fr / 1fr 2fr";
+					SidebarDisplay.sidebar.style.display = "grid";
+					SidebarDisplay.sidebar.style.gridArea = "1 / 1 / 3 / 2";
+					SidebarDisplay.playerOneName.textContent = `${formDisplay.playerOneInput.value}'s turn`;
+					SidebarDisplay.playerOneName.style.transform = "scale(1.2)";
+					SidebarDisplay.playerTwoName.textContent = `${formDisplay.playerTwoInput.value}`;
 					GameboardDisplay.boardDisplay.style.display = "grid";
 				});
-					
-	return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
-	})();		
-			
-	function endGameDisplay() {
+	return { form, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
+	})();
 	
-			const resultDisplay = document.querySelector(".result-display");
-			container.appendChild(resultDisplay);
-			if (Players.winner === Players.activePlayer) {
-				resultDisplay.style.display = "grid";
-				resultDisplay.textContent = `${Players.activePlayer} wins!`;
+	const SidebarDisplay = (function () {
+		
+		const sidebar = document.querySelector(".sidebar");
+		container.appendChild(sidebar);
+		
+		const playerX = document.createElement("h1");
+		sidebar.appendChild(playerX);
+			playerX.id = "player-x";
+			playerX.textContent = "X:";
+			
+		const playerOneName = document.createElement("h1");
+		sidebar.appendChild(playerOneName);
+			playerOneName.id = "player-one-name";	
+			playerOneName.textContent = `${formDisplay.playerOneInput.value}'s turn`;
+		
+		const playerO = document.createElement("h1");
+		sidebar.appendChild(playerO);
+			playerO.id = "player-o";
+			playerO.textContent = "O:";
+		
+		const playerTwoName = document.createElement("h1");
+			sidebar.appendChild(playerTwoName);
+			playerTwoName.id = "player-two-name";
+			playerTwoName.textContent = `${formDisplay.playerTwoInput.value}`;
+		
+	return {sidebar, playerX, playerOneName, playerO, playerTwoName }
+	})();
+			
+	const GameboardDisplay = (function () {
+			
+		const boardDisplay = document.querySelector(".board");
+		container.appendChild(boardDisplay);
+			
+		for (let i=0;i<9;i++) {
+			const square = document.createElement("button");
+			boardDisplay.appendChild(square);
+			square.id = `square${(i+ 1)}`;
+			square.classList.add("square");
+			square.textContent = "";
+			square.addEventListener('click', () => {
 				
-	
-			} else if (Players.winner === "") {
-				resultDisplay.style.display = "grid";
-				resultDisplay.textContent = `It's a draw!`;
-			}
-	
-			const playAgainButton = document.createElement('button');
-				container.appendChild(playAgainButton);
-				playAgainButton.id = "play-again-button";
-				playAgainButton.textContent = "Play again?";
-				playAgainButton.addEventListener('click', () =>{
-					window.location.reload();
+				if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
+					GameController.makeMove(Players.playerOne, (i - 1) + 1);
+					square.textContent = "X"
+					square.style.color = "var(--player-one)";
+					GameController.checkWinner();
+					Players.activePlayer = Players.playerTwo;
+					SidebarDisplay.playerTwoName.style.transform = "scale(1.2)";
+					SidebarDisplay.playerOneName.style.transform = "scale(1)";
+					SidebarDisplay.playerTwoName.textContent = `${formDisplay.playerTwoInput.value}'s turn`;
+					SidebarDisplay.playerOneName.textContent = `${formDisplay.playerOneInput.value}`;
+					
+				} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
+					GameController.makeMove(Players.playerTwo, (i - 1) + 1);
+					square.textContent = "O";
+					square.style.color = "var(--player-two)";
+					GameController.checkWinner();
+					Players.activePlayer = Players.playerOne;
+					SidebarDisplay.playerOneName.style.transform = "scale(1.2)";
+					SidebarDisplay.playerTwoName.style.transform = "scale(1)";
+					SidebarDisplay.playerOneName.textContent = `${formDisplay.playerOneInput.value}'s turn`;
+					SidebarDisplay.playerTwoName.textContent = `${formDisplay.playerTwoInput.value}`;
+				}
 			})
-		}
+		} 
 			
+	return { boardDisplay }
+	})();		
+		
+	function endGameDisplay() {
+			
+		const overlay = document.createElement("div");
+		DisplayController.container.appendChild(overlay);
+			overlay.id = "overlay"; 
+			overlay.style.display= "grid";
+		
+		const resultDisplay = document.createElement("div");
+		overlay.appendChild(resultDisplay);
+			resultDisplay.id = "result-display";
+			resultDisplay.style.display = "grid";
+		const result = document.createElement("h1");
+			resultDisplay.appendChild(result);
+			result.id = "result";
+			
+			if (Players.winner === Players.activePlayer) {
+				result.textContent = `${Players.activePlayer} wins!`;
+			
+			} else if (Players.winner === "") {
+				result.textContent = `It's a draw!`;
+		}
+		
+		const playAgainButton = document.createElement('button');
+		resultDisplay.appendChild(playAgainButton);
+			playAgainButton.id = "play-again-button";
+			playAgainButton.textContent = "Play again?";
+			
+			playAgainButton.addEventListener('click', () =>{
+				window.location.reload();
+			})
+
+	return { overlay, resultDisplay, playAgainButton };
+	}
+		
 return { container, GameboardDisplay, SidebarDisplay, endGameDisplay }
 })();
+	

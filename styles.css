@@ -4,7 +4,7 @@
   --player-two: #000052;
   --square-background: #FBF5F3;
   --button-background: #C42847;
-  --button-font: #FBF5F3;
+  --button-text: #FBF5F3;
   --input-background: #FBF5F3;
   --game-text: #C42847;
 }
@@ -14,18 +14,59 @@
   background-color: var(--background);
   overflow:hidden;
 }
+
 .container {
   display: grid;
   height: 100vh;
-  grid-template-columns: 1fr 2fr;
-  grid-template-rows: .15fr 1fr;
+  width: 100vw;
   z-index: 0;
 }  
+
+  .form {
+      display: grid;
+      grid-area: 1 / 1 / 2 / 2;
+      grid-template: repeat(5, 1fr) / 1fr;
+  }
+
+label {
+  place-self: center;
+  font-size: 40px;
+}
+
+input {
+  align-self: start;
+  justify-self: center;
+  height: 30px;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  border-style: hidden;
+  background-color: var(--square-background);
+}
+
+#player-one-label {
+  grid-area: 1 / 1 / 2 / 2;
+  color: var(--player-one);
+}
+
+#player-one-input {
+  grid-area: 2 / 1 / 3 / 2;
+}
+
+#player-two-label {
+  grid-area: 3 / 1 / 4 / 2;
+  color: var(--player-two);
+}
+
+#player-two-input {
+  grid-area: 4 / 1 / 5 / 2;
+}
+
 .board {
     display: none;
     height: 500px;
     width: 500px;
-    grid-area: 2 / 2 / 3 / 3;
+    grid-area: 1 / 2 / 3 / 3;
     place-self: center;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -43,53 +84,44 @@
   }
 
   .sidebar {
-    display: grid;
-    grid-area: 1 / 1 / 3 / 3;
-    grid-template: repeat(5, 1fr) / 1fr;
-
+    display: none;
+    grid-template: repeat(3, 1fr) / 1fr;
+    grid-Area: 1 / 1 / 2 / 2;
   }
 
-.form {
-    display: grid;
-    grid-template: repeat(5, 1fr) / 1fr;
-    grid-area: 1 / 1 / 6 / 2;
+
+#player-x {
+  grid-area: 1 / 1 / 2 / 2;
+  align-self: end;
+  justify-self: center;
+  font-size: 50px;
+  color: var(--player-one);
 }
 
-label {
- place-self: center;
- font-size: 40px;
- 
-}
-
-input {
+#player-one-name {
+  grid-area: 2 / 1 / 3 / 2;
   align-self: start;
   justify-self: center;
-  height: 30px;
-  padding: 20px;
-  width: 300px;
-  border-radius: 8px;
-  border-style: hidden;
-  background-color: var(--square-background);
+  font-size: 30px;
+  color: var(--player-one);
 }
 
-  #player-one-label {
-    grid-area: 1 / 1 / 2 / 2;
-    color: var(--player-one);
-  }
+#player-o {
+  grid-area: 2 / 1 / 3 / 2;
+  align-self: end;
+  justify-self: center;
+  font-size: 50px;
+  color: var(--player-two);
+}
 
-  #player-one-input {
-    grid-area: 2 / 1 / 3 / 2;
-  }
+#player-two-name {
+  grid-area: 3 / 1 / 4 / 2;
+  align-self: start;
+  justify-self: center;
+  font-size: 30px;
+  color: var(--player-two);
+}
 
-  #player-two-label {
-    grid-area: 3 / 1 / 4 / 2;
-    color: var(--player-two);
-  }
-
-  #player-two-input {
-    grid-area: 4 / 1 / 5 / 2;
-  }
-  
 
 #play-button, #play-again-button {
   padding: 20px;
@@ -97,7 +129,7 @@ input {
   text-align: center;
   border-style: none;
   background-color: var(--button-background);
-  color: var(--button-font);
+  color: var(--button-text);
 }
 
 #play-button {
@@ -108,19 +140,39 @@ input {
   font-size: 18px;
 }
 
-.result-display {
-  color: var(--button-background);
-  grid-area: 1 / 1 / 2 / 2;
-  font-size: 50px;
-  place-self: center;
+#overlay {
+    display: none;
+    grid-area: 1 / 1 / 2 / 3;
+    grid-template-rows: 1fr / 1fr;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+    z-Index: 1; 
+  }
 
+#result-display {
+  display: none;
+  grid-template: repeat(2, 1fr) / 1fr;
+  place-self: center;
+  height: 350px;
+  width: 400px;
+  background-color: var(--background);
+  border-radius: 20px;
+}
+
+#result {
+  grid-area: 1 / 1 / 2 / 2;
+  place-self: center;
+  color: var(--game-text);
+  font-size: 50px;
 }
 
 #play-again-button {
-  grid-area: 1 / 2 / 2 / 3;
   place-self: center;
-  width: 270px;
-  font-size: 24px;
+  width: 300px;
+  font-size: 30px;
 
-}
+
+} 
+
 
