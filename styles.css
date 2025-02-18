@@ -155,7 +155,7 @@ input {
   grid-template: repeat(2, 1fr) / 1fr;
   place-self: center;
   height: 350px;
-  width: 400px;
+  width: 450px;
   background-color: var(--background);
   border-radius: 20px;
 }
