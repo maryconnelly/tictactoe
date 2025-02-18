@@ -1,9 +1,21 @@
+:root {
+  --background: #E4DFDD;
+  --player-one: #E28413;
+  --player-two: #000052;
+  --square-background: #FBF5F3;
+  --button-background: #C42847;
+  --button-font: #FBF5F3;
+  --input-background: #FBF5F3;
+  --game-text: #C42847;
+}
+
 * {
   font-family: monospace;
+  background-color: var(--background);
+  overflow:hidden;
 }
 .container {
   display: grid;
-  border: black 1px solid;
   height: 100vh;
   grid-template-columns: 1fr 2fr;
   grid-template-rows: .15fr 1fr;
@@ -18,10 +30,16 @@
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
     grid-auto-flow: row;
-    border: 1px solid black;
+    background-color: var(--square-background);
     gap: 2px;
     padding: 2px;
 
+  }
+
+  .square {
+    border-color: var(--player-one-color);
+    background-color: var(--square-background);
+    font-size: 80px;
   }
 
   .sidebar {
@@ -31,22 +49,32 @@
 
   }
 
-
-.result-display {
-    display: none;
-    grid-area: 1 / 1 / 2 / 3;
-    place-self: center;
-    font-size: 28px;
-}
-
-  .form {
+.form {
     display: grid;
     grid-template: repeat(5, 1fr) / 1fr;
     grid-area: 1 / 1 / 6 / 2;
-  }
+}
+
+label {
+ place-self: center;
+ font-size: 40px;
+ 
+}
+
+input {
+  align-self: start;
+  justify-self: center;
+  height: 30px;
+  padding: 20px;
+  width: 300px;
+  border-radius: 8px;
+  border-style: hidden;
+  background-color: var(--square-background);
+}
 
   #player-one-label {
     grid-area: 1 / 1 / 2 / 2;
+    color: var(--player-one);
   }
 
   #player-one-input {
@@ -55,52 +83,40 @@
 
   #player-two-label {
     grid-area: 3 / 1 / 4 / 2;
+    color: var(--player-two);
   }
 
   #player-two-input {
     grid-area: 4 / 1 / 5 / 2;
   }
   
-  label {
-   place-self: center;
-   font-size: 28px;
-    
-  }
-  input {
-    align-self: start;
-    justify-self: center;
-    border: black solid 1px;
-    height: 30px;
-    padding: 20px;
-    width: 300px;
-    border-radius: 8px;
-    border-color: #315659;
-  }
+
+#play-button, #play-again-button {
+  padding: 20px;
+  width: 220px;
+  border-radius: 20px;
+  text-align: center;
+  font-size: 18px;
+  background-color: var(--button-background);
+  color: var(--button-font);
+}
 
 #play-button {
   grid-area: 5 / 1 / 6 / 2;
   align-self: start;
   justify-self: center;
-  border: solid 1px black;
-  padding: 20px;
-  width: 220px;
-  border-radius: 20px;
-  text-align: center;
-  font-size: 18px;
-  background-color: #315659;
-  color: white;
+}
+
+.result-display {
+  color: var(--button-background);
+  grid-area: 1 / 1 / 2 / 2;
+  font-size: 50px;
+  place-self: center;
+
 }
 
 #play-again-button {
-  grid-area: 1 / 1 / 2 / 2;
+  grid-area: 1 / 2 / 2 / 3;
   place-self: center;
-  border: solid 1px black;
-  padding: 20px;
-  width: 220px;
-  border-radius: 20px;
-  text-align: center;
-  font-size: 18px;
-  background-color: #315659;
-  color: white;
 }
 

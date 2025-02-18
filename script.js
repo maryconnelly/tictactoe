@@ -1,8 +1,3 @@
-// //To-Do's
-// draw result
-// winner display
-// styling
-
 
 // object to store the board
 const Gameboard = (function() {
@@ -52,13 +47,9 @@ const GameController = (function () {
 			Gameboard.boardArray[6] === Gameboard.boardArray[4] && Gameboard.boardArray[4] === Gameboard.boardArray[2]) {
 				Players.winner = Players.activePlayer;
 				DisplayController.endGameDisplay();
-				
-
 			} else if (Gameboard.boardArray[0] !== "" && Gameboard.boardArray[1] !== "" && Gameboard.boardArray[2] !== "" && Gameboard.boardArray[3] !== "" && Gameboard.boardArray[4] !== "" && Gameboard.boardArray[5] !== "" && Gameboard.boardArray[6] !== "" && Gameboard.boardArray[7] !== "" && Gameboard.boardArray[8] !== "") {
 				Players.winner = "";
 				DisplayController.endGameDisplay();
-
-
 			} else {
 			return;
 			}
@@ -72,7 +63,6 @@ const DisplayController = (function () {
 	const container = document.querySelector(".container");
 		document.body.appendChild(container);
 	
-		
 	const GameboardDisplay = (function () {
 
 		const boardDisplay = document.querySelector(".board");
@@ -81,77 +71,71 @@ const DisplayController = (function () {
 		for (let i=0;i<9;i++) {
 		const square = document.createElement("button");
 			boardDisplay.appendChild(square);
+			square.id = `square${(i+ 1)}`;
+			square.classList.add("square");
 			square.textContent = "";
 			square.addEventListener('click', () => {
 
 					if (square.textContent === "" && Players.activePlayer === Players.playerOne) {	
 						GameController.makeMove(Players.playerOne, (i - 1) + 1);
 						square.textContent = "X"
-							square.style.color = "#2978A0";
-							square.style.fontSize = "80px";
+						square.style.color = "var(--player-one)";
 						GameController.checkWinner();
 						Players.activePlayer = Players.playerTwo;
 						SidebarDisplay.playerTwoLabel.style.transform = "scale(1.2)";
 						SidebarDisplay.playerOneLabel.style.transform = "scale(1)";
-						SidebarDisplay.playerTwoLabel.textContent = `X: ${SidebarDisplay.playerTwoInput.value}'s turn`;
-						SidebarDisplay.playerOneLabel.textContent = `O: ${SidebarDisplay.playerOneInput.value}`;
+						SidebarDisplay.playerTwoLabel.textContent = `${SidebarDisplay.playerTwoInput.value}'s turn`;
+						SidebarDisplay.playerOneLabel.textContent = `${SidebarDisplay.playerOneInput.value}`;
 						
 					} else if (square.textContent === "" && Players.activePlayer === Players.playerTwo) {
 						GameController.makeMove(Players.playerTwo, (i - 1) + 1);
 						square.textContent = "O";
-							square.style.color = "#A38F52";
-							square.style.fontSize = "80px";
+						square.style.color = "var(--player-two)";
 						GameController.checkWinner();
 						Players.activePlayer = Players.playerOne;
 						SidebarDisplay.playerOneLabel.style.transform = "scale(1.2)";
 						SidebarDisplay.playerTwoLabel.style.transform = "scale(1)";
-						SidebarDisplay.playerOneLabel.textContent = `O: ${SidebarDisplay.playerOneInput.value}'s turn`;
-						SidebarDisplay.playerTwoLabel.textContent = `X: ${SidebarDisplay.playerTwoInput.value}`;
+						SidebarDisplay.playerOneLabel.textContent = `${SidebarDisplay.playerOneInput.value}'s turn`;
+						SidebarDisplay.playerTwoLabel.textContent = `${SidebarDisplay.playerTwoInput.value}`;
 					}
-
-				console.log(Gameboard.boardArray);
-				console.log(`${Players.activePlayer} is active`);
-				console.log(`Winner is ${Players.winner}`);
 			})
 		} 
 
-			return { boardDisplay }
-		})();
+	return { boardDisplay }
+	})();
 		
 	const SidebarDisplay = (function () {
 	
-			const sidebar = document.querySelector(".sidebar");
+		const sidebar = document.querySelector(".sidebar");
 				container.appendChild(sidebar);
 	
-			const form = document.querySelector(".form");
+		const form = document.querySelector(".form");
 				sidebar.appendChild(form);
 				form.id = "form";
 	
-				const playerOneLabel = document.createElement("label");
+			const playerOneLabel = document.createElement("label");
 				form.appendChild(playerOneLabel);
-				playerOneLabel.htmlFor = "player-one-input";
-				playerOneLabel.textContent = "Player One's Name:";
-					playerOneLabel.style.color = "#2978A0";
-					playerOneLabel.style.fontSize = "40px";
-				playerOneLabel.classList.add("player-one");
-				playerOneLabel.id = "player-one-label";
+					playerOneLabel.htmlFor = "player-one-input";
+					playerOneLabel.classList.add("player-one");
+					playerOneLabel.id = "player-one-label";
+					playerOneLabel.textContent = "Player One's Name:";
+					playerOneLabel.style.color = "var(--player-one)";
 				
-				const playerOneInput = document.createElement("input");
+			const playerOneInput = document.createElement("input");
 				form.appendChild(playerOneInput);
-				playerOneInput.type = "text";
-				playerOneInput.id = "player-one-input";
-				playerOneInput.classList.add("player-one");
-				playerOneInput.required = true;
-				
+					playerOneInput.type = "text";
+					playerOneInput.id = "player-one-input";
+					playerOneInput.classList.add("player-one");
+					playerOneInput.required = true;
+					
 			const playerTwoLabel = document.createElement("label");
 				form.appendChild(playerTwoLabel);
 					playerTwoLabel.htmlFor = "player-two-input";
-					playerTwoLabel.textContent = "Player Two's Name:";
-						playerTwoLabel.style.color = "#A38F52";
-						playerTwoLabel.style.fontSize = "40px";
 					playerTwoLabel.classList.add("player-two");
 					playerTwoLabel.id = "player-two-label";
-
+					playerTwoLabel.textContent = "Player Two's Name:";
+					playerTwoLabel.style.color = "var(--player-two)";
+					
 			const playerTwoInput = document.createElement("input");
 				form.appendChild(playerTwoInput);
 					playerTwoInput.type = "text";
@@ -163,52 +147,71 @@ const DisplayController = (function () {
 				form.appendChild(playButton);
 				playButton.textContent = "Play Tic-Tac-Toe!";
 				playButton.id = "play-button";
+				
 				playButton.addEventListener('click', () => {
-					playerOneInput.style.display = "none";
-					playerOneLabel.style.gridArea = "2 / 1 / 3 / 2";
-					playerOneLabel.style.justifySelf = "end";
-					playerOneLabel.style.fontSize = "24px";
-					playerOneLabel.textContent = `X: ${playerOneInput.value}'s turn`;
+
+					SidebarDisplay.sidebar.style.gridTemplate = "repeat(6, 1fr) / 1fr";
+					
+					const xLabel = document.createElement("h1");
+					SidebarDisplay.sidebar.appendChild(xLabel);
+					xLabel.style.gridArea = "2 / 1 / 3 / 2"
+					xLabel.textContent = "X:"
+					xLabel.style.justifySelf = "center";
+					xLabel.style.fontSize = "40px";
+					xLabel.style.color = "var(--game-text)";
+
+					
+					playerOneLabel.style.gridArea = "3 / 1 / 4 / 2";
+					playerOneLabel.style.justifySelf = "center";
+					playerOneLabel.style.fontSize = "30px";
+					playerOneLabel.textContent = `${playerOneInput.value}'s turn`;
 					playerOneLabel.style.transform = "scale(1.5)";
-					playerTwoInput.style.display = "none";
-					playerTwoLabel.style.gridArea = "4 / 1 / 5 / 2";
-					playerTwoLabel.style.justifySelf = "end";
-					playerTwoLabel.style.fontSize = "24px";
-					playerTwoLabel.textContent = `O: ${playerTwoInput.value}`;
+					
+					playerOneInput.style.display = "none";
+
+					const oLabel = document.createElement("h1");
+					SidebarDisplay.sidebar.appendChild(oLabel);
+					oLabel.style.gridArea = "4 / 1 / 5 / 2"
+					oLabel.textContent = "O:";
+					oLabel.style.justifySelf = "center";
+					oLabel.style.fontSize = "40px";
+					oLabel.style.color = "var(--game-text)";
+					
+					playerTwoLabel.style.gridArea = "5 / 1 / 6 / 2";
+					playerTwoLabel.style.justifySelf = "center";
+					playerTwoLabel.style.fontSize = "30px";
+					playerTwoLabel.textContent = `${playerTwoInput.value}`;
+						playerTwoInput.style.display = "none";
 					playButton.style.display = "none";
 					sidebar.style.gridArea = "1 / 1 / 3 / 2";
 					GameboardDisplay.boardDisplay.style.display = "grid";
 				});
 					
-				return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
-			})();		
+	return { sidebar, playerOneInput, playerOneLabel, playerTwoInput, playerTwoLabel, playButton }	
+	})();		
 			
 	function endGameDisplay() {
-
-		SidebarDisplay.playerOneLabel.textContent = `X: ${SidebarDisplay.playerOneInput.value}`;
-		SidebarDisplay.playerOneLabel.style.transform = "scale(1)";
-		SidebarDisplay.playerTwoLabel.textContent = `X: ${SidebarDisplay.playerTwoInput.value}`;
-		SidebarDisplay.playerTwoLabel.style.transform = "scale(1)";
-
-		const resultDisplay = document.querySelector(".result-display");
-		container.appendChild(resultDisplay);
-		if (Players.winner === Players.activePlayer) {
-			resultDisplay.style.display = "grid";
-			resultDisplay.textContent = `${Players.activePlayer} wins!`;
-
-		} else if (Players.winner === "") {
-			resultDisplay.style.display = "grid";
-			resultDisplay.textContent = `It's a draw!`;
+	
+			const resultDisplay = document.querySelector(".result-display");
+			container.appendChild(resultDisplay);
+			if (Players.winner === Players.activePlayer) {
+				resultDisplay.style.display = "grid";
+				resultDisplay.textContent = `${Players.activePlayer} wins!`;
+				
+	
+			} else if (Players.winner === "") {
+				resultDisplay.style.display = "grid";
+				resultDisplay.textContent = `It's a draw!`;
+			}
+	
+			const playAgainButton = document.createElement('button');
+				container.appendChild(playAgainButton);
+				playAgainButton.id = "play-again-button";
+				playAgainButton.textContent = "Play again?";
+				playAgainButton.addEventListener('click', () =>{
+					window.location.reload();
+			})
 		}
-
-		const playAgainButton = document.createElement('button');
-			container.appendChild(playAgainButton);
-			playAgainButton.id = "play-again-button";
-			playAgainButton.textContent = "Play again?";
-			playAgainButton.addEventListener('click', () =>{
-				window.location.reload();
-		})
-	}
 			
 return { container, GameboardDisplay, SidebarDisplay, endGameDisplay }
 })();
